@@ -18,18 +18,18 @@ The goal of this project is to demonstrate practical understanding of:
 
 ## Project Structure
 
-avl-tree-cpp/
-|
-|-- include/
-|   |-- avlTree.h
-|   |-- student.h
-|   |-- utils.h
-|
-|-- src/
-|   |-- avlTree.cpp
-|   |-- student.cpp
-|   |-- utils.cpp
-|   |-- main.cpp
+avl-tree-cpp/  
+|  
+|-- include/  
+|   |-- avlTree.h  
+|   |-- student.h  
+|   |-- utils.h  
+|  
+|-- src/  
+|   |-- avlTree.cpp  
+|   |-- student.cpp  
+|   |-- utils.cpp  
+|   |-- main.cpp  
 
 ---
 
@@ -206,3 +206,4 @@ The program can be tested directly through the executable by verifying:
 - Improve UI with colors or clearer formatting
 - Add automated unit tests
 - Extend validation rules for names
+
