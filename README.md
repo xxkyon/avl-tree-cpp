@@ -161,24 +161,24 @@ avl.exe
 
 ---
 
-## Example Usage
-
-***********************************
-Type in 0 to stop the algorithm
-Type in 1 to insert an element
-Type in 2 to remove an element
-Type in 3 to search for an element
-Type in 4 to print the AVL tree
-
-Choose an option: 1
-Insert the student's ID: 101
-Insert the student's name: André Schiavone
-
-Choose an option: 4
-Type 2 to print it in order
-
-André Schiavone (101)
-***********************************
+## Example Usage  
+  
+***********************************  
+Type in 0 to stop the algorithm  
+Type in 1 to insert an element  
+Type in 2 to remove an element  
+Type in 3 to search for an element  
+Type in 4 to print the AVL tree  
+  
+Choose an option: 1  
+Insert the student's ID: 101  
+Insert the student's name: André Schiavone  
+  
+Choose an option: 4  
+Type 2 to print it in order  
+  
+André Schiavone (101)  
+***********************************  
 
 ---
 
@@ -206,4 +206,5 @@ The program can be tested directly through the executable by verifying:
 - Improve UI with colors or clearer formatting
 - Add automated unit tests
 - Extend validation rules for names
+
 
