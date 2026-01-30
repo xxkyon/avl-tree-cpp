@@ -175,7 +175,11 @@ Insert the student's ID: 101
 Insert the student's name: André Schiavone  
   
 Choose an option: 4  
+Type 1 to print it in pre-order  
 Type 2 to print it in order  
+Type 3 to print it in order  
+  
+Your option: 2  
   
 André Schiavone (101)  
 ***********************************  
@@ -206,5 +210,6 @@ The program can be tested directly through the executable by verifying:
 - Improve UI with colors or clearer formatting
 - Add automated unit tests
 - Extend validation rules for names
+
 
 
