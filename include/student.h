@@ -11,6 +11,7 @@ class Student{
     public:
     Student();
     Student(int id, const std::string& name);
+    void setName(const std::string& name);
     
     std::string getName() const;
     int getId() const;

@@ -31,11 +31,12 @@ class AvlTree{
         bool isEmpty() const;
 
         void insert(const Student& student);
-        void remove(const Student& student);
-        void removeRecursive(const Student& student, Node*& currentNode, bool& heightDecreased);
+        bool remove(const Student& student);
+        void removeRecursive(const Student& student, Node*& currentNode, bool& heightDecreased, bool& removed);
         void removeNode(Node*& currentNode, bool& heightDecreased);
-        void getInOrderSuccessor(Student& nextStudent, Node* temp);
-        void search(Student& student, bool& found);
+        Node* getInOrderSuccessor(Node* node);
+        bool search(int id, Student& result);
+        bool updateStudentName(int id, const std::string& newName);
 
         void printPreOrder() const;
         void printInOrder() const;

@@ -54,21 +54,24 @@ void AvlTree::recursiveInsert(Node*& currentNode, const Student& student, bool& 
     }
 }
 
-void AvlTree::remove(const Student& student){
+bool AvlTree::remove(const Student& student){
     bool heightDecreased = false;
-    removeRecursive(student, root, heightDecreased);
+    bool removed = false;
+
+    removeRecursive(student, root, heightDecreased, removed);
+    return removed;
 }
 
-void AvlTree::getInOrderSuccessor(Student& nextStudent, Node* temp){
-    temp = temp->rightChild;
-    while(temp->leftChild != nullptr){
-        temp = temp->leftChild;
+Node* AvlTree::getInOrderSuccessor(Node* node){
+    Node* current = node;
+    while(current->leftChild != nullptr){
+        current = current->leftChild;
     }
-    nextStudent = temp->student;
+    return current;
 }
 
 
-void AvlTree::removeRecursive(const Student& student, Node*& currentNode, bool& heightDecreased){
+void AvlTree::removeRecursive(const Student& student, Node*& currentNode, bool& heightDecreased, bool& removed){
 
     if(currentNode == nullptr){
         heightDecreased = false;
@@ -76,16 +79,17 @@ void AvlTree::removeRecursive(const Student& student, Node*& currentNode, bool& 
     }
 
     if(student.getId() < currentNode->student.getId()){
-        removeRecursive(student, currentNode->leftChild, heightDecreased);
+        removeRecursive(student, currentNode->leftChild, heightDecreased, removed);
         if(heightDecreased){
             currentNode->balanceFactor+=1;
         }
     } else if (student.getId() > currentNode->student.getId()){
-        removeRecursive(student, currentNode->rightChild, heightDecreased);
-                if(heightDecreased){
+        removeRecursive(student, currentNode->rightChild, heightDecreased, removed);
+        if(heightDecreased){
             currentNode->balanceFactor-=1;
         }
     } else {
+        removed = true;
         removeNode(currentNode, heightDecreased);
     }
 
@@ -108,31 +112,51 @@ void AvlTree::removeNode(Node*& currentNode, bool& heightDecreased){
         delete temp;
         heightDecreased = true;
     } else{
-        Student nextStudent;
-        getInOrderSuccessor(nextStudent, currentNode);
-        currentNode->student = nextStudent;
-        removeRecursive(nextStudent, currentNode->rightChild, heightDecreased);
+        Node* successor = getInOrderSuccessor(currentNode->rightChild);
+        Student successorStudent = successor->student;
+        currentNode->student = successorStudent;
+
+        bool removed = false;
+        removeRecursive(successorStudent, currentNode->rightChild, heightDecreased, removed);
         if(heightDecreased){
             currentNode->balanceFactor-=1;
         } 
     }
 }
 
-void AvlTree::search(Student& student, bool& found){
-    found = false;
-    Node* currentNode = root;
-    while(currentNode != nullptr){
-        if(student.getId() < currentNode->student.getId()){
-            currentNode = currentNode->leftChild;
-        } else if(student.getId() > currentNode->student.getId()){
-            currentNode = currentNode->rightChild;
+bool AvlTree::search(int id, Student& result){
+    Node* current = root;
+
+    while(current != nullptr){
+        if(id < current->student.getId()){
+            current = current->leftChild;
+        } else if(id > current->student.getId()){
+            current = current->rightChild;
         } else{
-            found = true;
-            student = currentNode->student;
-            break;
+            result = current->student;
+            return true;
         }
     }
+    return false;
 }
+
+
+bool AvlTree::updateStudentName(int id, const std::string& newName){
+    Node* current = root;
+
+    while(current != nullptr){
+        if(id < current->student.getId()){
+            current = current->leftChild;
+        } else if(id > current->student.getId()){
+            current = current->rightChild;
+        } else {
+            current->student.setName(newName);
+            return true;
+        }
+    }
+    return false;
+}
+
 
 void AvlTree::printPreOrder() const{
     printPreOrder(root);

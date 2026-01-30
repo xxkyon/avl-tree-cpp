@@ -1,256 +1,208 @@
-#### **AVL Tree in C++**
+# AVL Tree Student Management System (C++)
 
+## Overview
 
+This project is a C++ console application that implements an AVL Tree to manage student records.
+Users can insert, remove, search, update, and print students using a menu-based interface.
 
-**This project implements an AVL Tree in C++ to manage student records using a self-balancing binary search tree.**
+The goal of this project is to demonstrate practical understanding of:
 
+- Self-balancing binary search trees (AVL Trees)
+- Pointers and references
+- Recursion
+- Tree rotations
+- Input validation
+- Object-oriented programming in C++
 
+---
 
-Each node stores a **Student object** identified by an **ID** and **name**.
-
-The tree automatically maintains balance through rotations after insertions and removals.
-
-
-
-This project was developed as a learning exercise focused on:
-
-\- Data structures
-
-\- Memory management
-
-\- Recursion
-
-\- Tree balancing algorithms
-
-
-
---------------------------------------------------
-
-
-
-###### **Features**
-
-
-
-\- Insert students into the AVL Tree
-
-\- Remove students by ID
-
-\- Search for a student by ID
-
-\- Tree traversals:
-
-&nbsp; - Pre-order
-
-&nbsp; - In-order
-
-&nbsp; - Post-order
-
-\- Automatic rebalancing using:
-
-&nbsp; - Single rotations (LL, RR)
-
-&nbsp; - Double rotations (LR, RL)
-
-
-
---------------------------------------------------
-
-
-
-###### **Concepts Applied**
-
-
-
-\- Binary Search Trees (BST)
-
-\- AVL balancing factor
-
-\- Recursive insertion and removal
-
-\- Pointer manipulation
-
-\- In-order successor strategy for node removal
-
-\- Separation of concerns using .h and .cpp files
-
-
-
---------------------------------------------------
-
-
-
-###### **Project Structure**
-
-
+## Project Structure
 
 avl-tree-cpp/
+|
+|-- include/
+|   |-- avlTree.h
+|   |-- student.h
+|   |-- utils.h
+|
+|-- src/
+|   |-- avlTree.cpp
+|   |-- student.cpp
+|   |-- utils.cpp
+|   |-- main.cpp
 
-├── README.md
+---
 
-├── include/
+## Student Management
 
-│     ├── avlTree.h
+Each student has:
+- A unique integer ID
+- A name (string)
 
-│     └── student.h
+Duplicate IDs are not allowed.
 
-└── src/
+If the user tries to insert a student with an existing ID, the program:
+1. Detects the duplicate
+2. Offers the option to update the student’s name
+3. Or cancel the operation
 
-&nbsp;     ├── student.cpp
+This guarantees data integrity while remaining user-friendly.
 
-&nbsp;     ├── avlTree.cpp
+---
 
-&nbsp;     └── main.cpp
+## Input Validation (utils.cpp / utils.h)
 
+The project includes a dedicated utility module to handle safe input.
 
+### Integer Input
 
---------------------------------------------------
+- IDs and menu options must be integers
+- Invalid input (letters or symbols) is rejected
+- The input buffer is cleared properly to avoid infinite loops
 
+### Name Validation
 
+- Names cannot contain numbers
+- Names can contain spaces and accented characters
+- Extra spaces are normalized:
+  - Leading and trailing spaces are removed
+  - Multiple consecutive spaces are reduced to one
 
-###### **Classes Overview**
+This behavior is implemented using a custom normalizeSpaces function.
 
+---
 
+## AVL Tree Implementation
 
-**Student**
+### Node Structure
 
+Each node stores:
+- A Student object
+- A pointer to the left child
+- A pointer to the right child
+- A balance factor used to keep the tree balanced
 
+### Insertion
 
-Represents a student with:
+- Uses standard BST insertion logic
+- Updates balance factors during recursive unwinding
+- Automatically rebalances the tree when necessary
 
-\- id (unique identifier)
+### Removal
 
-\- name
+Deletion handles all three cases:
+1. Node with no children
+2. Node with one child
+3. Node with two children
 
+For nodes with two children:
+- The in-order successor is found
+- The current node’s data is replaced
+- The successor node is removed recursively
 
+The remove function returns a boolean indicating whether the student was found and removed.
 
-Used as the data payload stored inside each tree node.
+---
 
+## Tree Rebalancing and Rotations
 
+The AVL tree maintains balance using the following rotations:
 
---------------------------------------------------
+- Right Rotation (LL case)
+- Left Rotation (RR case)
+- Left-Right Rotation (LR case)
+- Right-Left Rotation (RL case)
 
+Balance factors are updated carefully after insertions and removals to preserve the AVL property.
 
+---
 
-**Node**
+## Tree Traversals
 
+The tree supports three traversal methods:
 
+- Pre-order: Root -> Left -> Right
+- In-order: Left -> Root -> Right
+  (prints students sorted by ID)
+- Post-order: Left -> Right -> Root
 
-Represents a node in the AVL Tree.
+---
 
+## User Interaction (main.cpp)
 
+- Menu-based interface
+- Repeats until the user chooses to exit
+- Validates menu options
+- Provides clear feedback for all operations:
+  - Successful insertion
+  - Successful removal
+  - Student not found
+  - Invalid input
 
-Each node contains:
+---
 
-\- A Student
+## How to Compile and Run
 
-\- Left and right child pointers
+1. Navigate to the project root folder:
 
-\- A balance factor used for AVL rebalancing
+cd avl-tree-cpp
 
+2. Compile all source files:
 
+g++ src/*.cpp -Iinclude -o avl
 
---------------------------------------------------
+3. Run the program:
 
+Linux / macOS:
+./avl
 
+Windows:
+avl.exe
 
-**AvlTree**
+---
 
+## Example Usage
 
+***********************************
+Type in 0 to stop the algorithm
+Type in 1 to insert an element
+Type in 2 to remove an element
+Type in 3 to search for an element
+Type in 4 to print the AVL tree
 
-Implements the AVL Tree logic:
+Choose an option: 1
+Insert the student's ID: 101
+Insert the student's name: André Schiavone
 
-\- Recursive insertion and removal
+Choose an option: 4
+Type 2 to print it in order
 
-\- Balance factor updates
+André Schiavone (101)
+***********************************
 
-\- Rotations to maintain height balance
+---
 
-\- Tree traversal methods
+## Testing Strategy
 
+The program can be tested directly through the executable by verifying:
 
+- Insertion of multiple students
+- Automatic balancing after insertions
+- Removal of leaf nodes
+- Removal of nodes with one child
+- Removal of nodes with two children
+- Correct rebalancing after removals
+- Searching for existing and non-existing IDs
+- Updating student names
+- Correct output of all traversal methods
+- Input validation for invalid menu options, IDs, and names
 
---------------------------------------------------
+---
 
+## Potential Improvements
 
-
-###### **How to Compile and Run**
-
-
-
-Using g++:
-
-
-
-g++ -Iinclude src/student.cpp src/avlTree.cpp src/main.cpp -o avlTree
-
-
-
---------------------------------------------------
-
-
-
-###### **Example Usage**
-
-
-
-The program runs in a terminal menu with the following options:
-
-
-
-\- Insert a student
-
-\- Remove a student
-
-\- Search by ID
-
-\- Print the tree using different traversal orders
-
-
-
---------------------------------------------------
-
-
-
-###### **Notes**
-
-
-
-\- The project prioritizes clarity and learning over optimization.
-
-\- No STL containers such as map or set were used to reinforce understanding of tree structures.
-
-\- This project reflects hands-on experience with lower-level C++ concepts such as pointers and manual memory management.
-
-
-
---------------------------------------------------
-
-
-
-###### **Future Improvements**
-
-
-
-\- Add support for duplicate IDs
-
-\- Implement iterative versions of operations
-
-\- Improve input validation
-
-\- Add unit tests
-
-
-
---------------------------------------------------
-
-
-
-###### **Author**
-
-
-
-Developed as a study project to deepen understanding of data structures and C++ fundamentals.
-
-
-
+- Add file I/O to save and load students
+- Display balance factors for debugging or learning purposes
+- Improve UI with colors or clearer formatting
+- Add automated unit tests
+- Extend validation rules for names
